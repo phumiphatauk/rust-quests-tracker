@@ -1,0 +1,12 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: postgres-quests-tracker
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=quests_tracker_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/db/:/var/lib/postgresql/data/
