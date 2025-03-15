@@ -6,14 +6,14 @@ use crate::domain::{
     value_objects::guild_commander_model::RegisterGuildCommanderModel,
 };
 
-pub struct GuildCommandersUsecase<T>
+pub struct GuildCommandersUseCase<T>
 where
     T: GuildCommandersRepository + Send + Sync,
 {
     guild_commanders_repository: Arc<T>,
 }
 
-impl<T> GuildCommandersUsecase<T>
+impl<T> GuildCommandersUseCase<T>
 where
     T: GuildCommandersRepository + Send + Sync,
 {

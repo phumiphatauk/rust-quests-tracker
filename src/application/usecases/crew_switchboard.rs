@@ -5,7 +5,7 @@ use crate::domain::repositories::{
     crew_switchboard::CrewSwitchBoardRepository, quest_viewing::QuestViewingRepository,
 };
 
-pub struct CrewSwitchBoardUsecase<T1, T2>
+pub struct CrewSwitchBoardUseCase<T1, T2>
 where
     T1: CrewSwitchBoardRepository + Send + Sync,
     T2: QuestViewingRepository + Send + Sync,
@@ -14,7 +14,7 @@ where
     quest_viewing_repository: Arc<T2>,
 }
 
-impl<T1, T2> CrewSwitchBoardUsecase<T1, T2>
+impl<T1, T2> CrewSwitchBoardUseCase<T1, T2>
 where
     T1: CrewSwitchBoardRepository + Send + Sync,
     T2: QuestViewingRepository + Send + Sync,

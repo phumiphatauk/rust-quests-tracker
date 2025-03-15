@@ -6,7 +6,7 @@ use crate::domain::{
     value_objects::quest_model::{AddQuestModel, EditQuestModel},
 };
 
-pub struct QuestOpsUsecase<T1, T2>
+pub struct QuestOpsUseCase<T1, T2>
 where
     T1: QuestOpsRepository + Send + Sync,
     T2: QuestViewingRepository + Send + Sync,
@@ -15,7 +15,7 @@ where
     quest_viewing_repository: Arc<T2>,
 }
 
-impl<T1, T2> QuestOpsUsecase<T1, T2>
+impl<T1, T2> QuestOpsUseCase<T1, T2>
 where
     T1: QuestOpsRepository + Send + Sync,
     T2: QuestViewingRepository + Send + Sync,

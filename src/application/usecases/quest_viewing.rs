@@ -6,14 +6,14 @@ use crate::domain::{
     value_objects::{board_checking_filter::BoardCheckingFilter, quest_model::QuestModel},
 };
 
-pub struct QuestViewingUsecase<T>
+pub struct QuestViewingUseCase<T>
 where
     T: QuestViewingRepository + Send + Sync,
 {
     quest_viewing_repository: Arc<T>,
 }
 
-impl<T> QuestViewingUsecase<T>
+impl<T> QuestViewingUseCase<T>
 where
     T: QuestViewingRepository + Send + Sync,
 {

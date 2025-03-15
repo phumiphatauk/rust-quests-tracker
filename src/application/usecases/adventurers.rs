@@ -6,14 +6,14 @@ use crate::domain::{
     value_objects::adventurer_model::RegisterAdventurerModel,
 };
 
-pub struct AdventurersUsecase<T>
+pub struct AdventurersUseCase<T>
 where
     T: AdventurersRepository + Send + Sync,
 {
     adventurers_repository: Arc<T>,
 }
 
-impl<T> AdventurersUsecase<T>
+impl<T> AdventurersUseCase<T>
 where
     T: AdventurersRepository + Send + Sync,
 {

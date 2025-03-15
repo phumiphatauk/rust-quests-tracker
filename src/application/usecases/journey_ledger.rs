@@ -5,7 +5,7 @@ use crate::domain::repositories::{
     journey_ledger::JourneyLedgerRepository, quest_viewing::QuestViewingRepository,
 };
 
-pub struct JourneyLedgerUsecase<T1, T2>
+pub struct JourneyLedgerUseCase<T1, T2>
 where
     T1: JourneyLedgerRepository + Send + Sync,
     T2: QuestViewingRepository + Send + Sync,
@@ -14,7 +14,7 @@ where
     quest_viewing_repository: Arc<T2>,
 }
 
-impl<T1, T2> JourneyLedgerUsecase<T1, T2>
+impl<T1, T2> JourneyLedgerUseCase<T1, T2>
 where
     T1: JourneyLedgerRepository + Send + Sync,
     T2: QuestViewingRepository + Send + Sync,
