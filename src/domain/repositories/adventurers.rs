@@ -1,7 +1,8 @@
-use crate::domain::entities::adventurers::{AdventurerEntity, RegisterAdventurerEntity};
 use anyhow::Result;
 use axum::async_trait;
 use mockall::automock;
+
+use crate::domain::entities::adventurers::{AdventurerEntity, RegisterAdventurerEntity};
 
 #[async_trait]
 #[automock]

@@ -29,5 +29,15 @@ pub async fn register<T>(
 where
     T: AdventurersRepository + Send + Sync,
 {
-    (StatusCode::BAD_REQUEST, "Unimplement").into_response()
+    match adventures_use_case
+        .register(register_adventurer_model)
+        .await
+    {
+        Ok(adventurer_id) => (
+            StatusCode::CREATED,
+            format!("Register adventurer id: {} successfully", adventurer_id),
+        )
+            .into_response(),
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()).into_response(),
+    }
 }
