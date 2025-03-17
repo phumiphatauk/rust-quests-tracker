@@ -4,6 +4,7 @@ use axum::{
     Extension, Json, Router,
     extract::{Path, State},
     http::StatusCode,
+    middleware,
     response::IntoResponse,
     routing::{delete, patch, post},
 };
@@ -14,9 +15,12 @@ use crate::{
         repositories::{quest_ops::QuestOpsRepository, quest_viewing::QuestViewingRepository},
         value_objects::quest_model::{AddQuestModel, EditQuestModel},
     },
-    infrastructure::postgres::{
-        postgres_connection::PgPoolSquad,
-        repositories::{quest_ops::QuestOpsPostgres, quest_viewing::QuestViewingPostgres},
+    infrastructure::{
+        axum_http::middlewares,
+        postgres::{
+            postgres_connection::PgPoolSquad,
+            repositories::{quest_ops::QuestOpsPostgres, quest_viewing::QuestViewingPostgres},
+        },
     },
 };
 
@@ -33,6 +37,9 @@ pub fn routes(db_pool: Arc<PgPoolSquad>) -> Router {
         .route("/", post(add))
         .route("/:quest_id", patch(edit))
         .route("/:quest_id", delete(remove))
+        .route_layer(middleware::from_fn(
+            middlewares::guild_commanders_authorization,
+        ))
         .with_state(Arc::new(quest_ops_use_case))
 }
 

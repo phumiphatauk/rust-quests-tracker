@@ -4,6 +4,7 @@ use axum::{
     Extension, Router,
     extract::{Path, State},
     http::StatusCode,
+    middleware,
     response::IntoResponse,
     routing::patch,
 };
@@ -16,10 +17,13 @@ use crate::{
         },
         value_objects::quest_statuses::QuestStatuses,
     },
-    infrastructure::postgres::{
-        postgres_connection::PgPoolSquad,
-        repositories::{
-            journey_ledger::JourneyLedgerPostgres, quest_viewing::QuestViewingPostgres,
+    infrastructure::{
+        axum_http::middlewares,
+        postgres::{
+            postgres_connection::PgPoolSquad,
+            repositories::{
+                journey_ledger::JourneyLedgerPostgres, quest_viewing::QuestViewingPostgres,
+            },
         },
     },
 };
@@ -36,6 +40,9 @@ pub fn routes(db_pool: Arc<PgPoolSquad>) -> Router {
         .route("/in-journey/:quest_id", patch(in_journey))
         .route("/to-completed/:quest_id", patch(to_completed))
         .route("/to-failed/:quest_id", patch(to_failed))
+        .route_layer(middleware::from_fn(
+            middlewares::guild_commanders_authorization,
+        ))
         .with_state(Arc::new(journey_ledger_use_case))
 }
 
