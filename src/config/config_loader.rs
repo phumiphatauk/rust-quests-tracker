@@ -29,7 +29,7 @@ pub fn load() -> Result<DotEnvyConfig> {
     Ok(DotEnvyConfig { server, database })
 }
 
-pub fn get_state() -> Stage {
+pub fn get_stage() -> Stage {
     dotenvy::dotenv().ok();
 
     let stage_str: String = std::env::var("STAGE").unwrap_or("".to_string());
@@ -39,9 +39,9 @@ pub fn get_state() -> Stage {
 pub fn get_adventurers_secret_env() -> Result<AdventurersSecret> {
     dotenvy::dotenv().ok();
     Ok(AdventurersSecret {
-        secret: std::env::var("JWT_ADVENTURE_SECRET").expect("JWT_ADVENTURE_SECRET is invalid"),
-        refresh_secret: std::env::var("JWT_ADVENTURE_REFRESH_SECRET")
-            .expect("JWT_ADVENTURE_REFRESH_SECRET is invalid"),
+        secret: std::env::var("JWT_ADVENTURER_SECRET").expect("JWT_ADVENTURER_SECRET is invalid"),
+        refresh_secret: std::env::var("JWT_ADVENTURER_REFRESH_SECRET")
+            .expect("JWT_ADVENTURER_REFRESH_SECRET is invalid"),
     })
 }
 
