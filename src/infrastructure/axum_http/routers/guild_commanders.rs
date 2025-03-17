@@ -29,5 +29,18 @@ pub async fn register<T>(
 where
     T: GuildCommandersRepository + Send + Sync,
 {
-    (StatusCode::BAD_REQUEST, "Unimplement").into_response()
+    match guild_commanders_use_case
+        .register(register_guild_commander_model)
+        .await
+    {
+        Ok(guild_commander_id) => (
+            StatusCode::CREATED,
+            format!(
+                "Register guild_commander id: {} successfully",
+                guild_commander_id
+            ),
+        )
+            .into_response(),
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()).into_response(),
+    }
 }
