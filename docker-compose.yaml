@@ -7,6 +7,25 @@ services:
       - POSTGRES_PASSWORD=123456
       - POSTGRES_DB=quests_tracker_db
     ports:
-      - "5432:5432"
+      - 5432:5432
     volumes:
       - ./data/db/:/var/lib/postgresql/data/
+
+  quests-tracker:
+    image: quests-tracker
+    container_name: quests-tracker
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    environment:
+      - STAGE=Local
+      - SERVER_PORT=8080
+      - SERVER_BODY_LIMIT=10
+      - SERVER_TIMEOUT=90
+      - DATABASE_URL=postgres://postgres:123456@postgres/quests_tracker_db
+      - JWT_ADVENTURER_SECRET=a_supersecret
+      - JWT_ADVENTURER_REFRESH_SECRET=ar_supersecretrefresh
+      - JWT_GUILD_COMMANDER_SECRET=g_supersecret
+      - JWT_GUILD_COMMANDER_REFRESH_SECRET = gr_supersecretrefresh
