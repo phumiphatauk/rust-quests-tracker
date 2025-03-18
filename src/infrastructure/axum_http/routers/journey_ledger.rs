@@ -107,5 +107,15 @@ where
     T1: JourneyLedgerRepository + Send + Sync,
     T2: QuestViewingRepository + Send + Sync,
 {
-    (StatusCode::BAD_REQUEST, "Unimplement").into_response()
+    match journey_ledger_use_case
+        .to_failed(quest_id, guild_commander_id)
+        .await
+    {
+        Ok(quest_id) => (
+            StatusCode::OK,
+            format!("Quest id: {} is now {:?}", quest_id, QuestStatuses::Failed),
+        )
+            .into_response(),
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()).into_response(),
+    }
 }
