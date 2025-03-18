@@ -48,7 +48,20 @@ where
     T1: CrewSwitchBoardRepository + Send + Sync,
     T2: QuestViewingRepository + Send + Sync,
 {
-    (StatusCode::BAD_REQUEST, "Unimplement").into_response()
+    match crew_switchboard_use_case
+        .join(quest_id, adventurer_id)
+        .await
+    {
+        Ok(_) => (
+            StatusCode::OK,
+            format!(
+                "Adventurer id: {}, has joined quest id: {}",
+                adventurer_id, quest_id
+            ),
+        )
+            .into_response(),
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()).into_response(),
+    }
 }
 
 pub async fn leave<T1, T2>(
