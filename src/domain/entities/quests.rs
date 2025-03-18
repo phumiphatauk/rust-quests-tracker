@@ -32,7 +32,7 @@ impl QuestEntity {
     }
 }
 
-#[derive(Debug, Clone, Queryable, AsChangeset)]
+#[derive(Debug, Clone, Queryable, Insertable)]
 #[diesel(table_name = quests)]
 pub struct AddQuestEntity {
     pub name: String,
