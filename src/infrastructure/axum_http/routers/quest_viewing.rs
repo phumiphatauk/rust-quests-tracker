@@ -36,7 +36,10 @@ pub async fn view_details<T>(
 where
     T: QuestViewingRepository + Send + Sync,
 {
-    (StatusCode::BAD_REQUEST, "Unimplement").into_response()
+    match quest_viewing_use_case.view_details(quest_id).await {
+        Ok(quest_model) => (StatusCode::OK, Json(quest_model)).into_response(),
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()).into_response(),
+    }
 }
 
 pub async fn board_checking<T>(
@@ -46,5 +49,8 @@ pub async fn board_checking<T>(
 where
     T: QuestViewingRepository + Send + Sync,
 {
-    (StatusCode::BAD_REQUEST, "Unimplement").into_response()
+    match quest_viewing_use_case.board_checking(&filter).await {
+        Ok(quest_model) => (StatusCode::OK, Json(quest_model)).into_response(),
+        Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()).into_response(),
+    }
 }
